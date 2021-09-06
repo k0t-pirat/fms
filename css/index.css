@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: 'SF-Pro';
+  font-weight: 400;
+  font-style: 'normal';
+  src: url('../font/SF\ Pro/SF-Pro-Display-Regular.otf');
+}
+
+@font-face {
+  font-family: 'SF-Pro';
+  font-weight: 500;
+  font-style: 'normal';
+  src: url('../font/SF\ Pro/SF-Pro-Display-Medium.otf');
+}
+
+@font-face {
+  font-family: 'SF-Pro';
+  font-weight: 700;
+  font-style: 'normal';
+  src: url('../font/SF\ Pro/SF-Pro-Text-Bold.otf');
+}
+
+body {
+  font-family: 'SF-Pro', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+}
+
+#react_root {
+  background-color: #141415;
+}
+
+.background {
+  position: relative;
+}
+.background > * {
+  position: relative;
+}
+.background::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+}
+.background--skew::before {
+  transform: skew(-10deg);
+}
+.background--yellow::before {
+  background: linear-gradient(to bottom, #F2C34E, #ED944F);
+}
+.background--blue::before {
+  background: linear-gradient(to bottom, #00ABFE, #144CEA);
+}
+.background--darkblue::before {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%), #0F66C6;
+}
+.background--darkred::before {
+  background: linear-gradient(0deg, rgba(0, 0, 0, 0.7) 0%, rgba(0, 0, 0, 0) 100%), #CC1616;
+}
+
+.gradient-border {
+  width: 100%;
+  height: 1px;
+  background: linear-gradient(180deg, rgba(243, 194, 79, 0) 0%, rgba(243, 194, 79, 0.2) 53.65%, rgba(243, 194, 79, 0) 100%);
+}
+
+.comment {
+  padding: 7px 16px;
+  background-color: #767680;
+  border-color: #16181F;
+  border-radius: 10px;
+}
+.comment::placeholder {
+  color: #EBEBF5;
+  color: rgba(235, 235, 245, 0.6);
+  opacity: '60%';
+  font-size: 17px;
+  font-weight: 400;
+}
