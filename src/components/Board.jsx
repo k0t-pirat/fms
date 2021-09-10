@@ -62,17 +62,50 @@ const leaders = [
 
 const Board = () => {
   return (
-    <main>
-      <h1>Leaderboard</h1>
-      <input type="radio" name="lists" value="current" />
-      <input type="radio" name="lists" value="alltime" />
+    <main className="px-6">
+      <h1 className="font-17 text-center">Leaderboard</h1>
+      {/* <input type="radio" name="lists" value="current" />
+      <input type="radio" name="lists" value="alltime" /> */}
       <section>
+        <div className="flex justify-between font-9 mb-5 mt-5 px-3" style={{color: 'rgba(255,255,255,0.7)'}}>
+          <div className="flex flex-start">
+            <p className="minw-35">Place</p>
+            <p>Player</p>
+          </div>
+          <div className="flex flex-end text-right">
+            <p>All-time streak</p>
+            <p className="minw-50">Best streak</p>
+          </div>
+        </div>
         <ul>
-          {leaders.map(leader => (
-            <li>
-              <p>{leader}</p>
-            </li>
-          ))}
+          {leaders.map((leader, index) => {
+            const {name, nickname, currentStreak, bestStreak, leaderPlace} = leader
+
+            return (
+              <li key={index} className={"flex justify-between items-center py-2 px-3 mb-5" + (leaderPlace ? " background background--skew leader-" + leaderPlace : "")}>
+                <div className="flex items-center">
+                  <div className="minw-35">
+                    <p className="leader-index text-center" style={{width: '15px'}}>
+                      <span className="leader-index-text">{index + 1}</span>
+                    </p>
+                  </div>
+                  <div className="flex">
+                    <div style={{width: '48px', height: '48px', borderRadius: '50%', backgroundColor: 'white'}}>
+                      <img src={`./img/avatars/avatar-${index}.png`} />
+                    </div>
+                    <div className="flex flex-col justify-around ml-2">
+                      <p className="font-12">{name}</p>
+                      <p className="font-11">{nickname}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="flex text-right">
+                  <p>{currentStreak}</p>
+                  <p className="minw-50">{bestStreak}</p>
+                </div>
+              </li>
+            )
+          })}
         </ul>
       </section>
     </main>
