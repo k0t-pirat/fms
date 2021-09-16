@@ -1,0 +1,6 @@
+{
+  "appId": "com.example.app",
+  "appName": "fms",
+  "webDir": "www",
+  "bundledWebRuntime": false
+}

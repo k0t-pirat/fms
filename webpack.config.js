@@ -1,4 +1,10 @@
+const path = require('path')
+
 module.exports = {
+  output: {
+    path: path.resolve(__dirname, 'www/dist'),
+    filename: 'main.js',
+  },
   mode: 'development',
   module: {
     rules: [ 
