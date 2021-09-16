@@ -1,0 +1,4 @@
+ - 1) npm run build
+ - 2) npx cap sync
+ - 3) npx cap add android (если папка android уже есть в корне, перед этой командой её надо удалить)
+ - 4) npx cap open adroid

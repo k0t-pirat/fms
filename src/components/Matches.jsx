@@ -18,8 +18,13 @@ const comments = [
     time: '2 hours ago',
   },
 ]
+const Matches = ({setCurrentPage}) => {
 
-const Matches = () => {
+  const setBoardPage = (evt) => {
+    evt.preventDefault()
+    setCurrentPage('board')
+  }
+  
   return (
     <main className="px-6">
       <section className="mb-6">
@@ -31,7 +36,7 @@ const Matches = () => {
             </div>
             <div className="pl-3 py-3 flex-grow">
               <p className="font-12">My streak</p>
-              <p className="text-2xl font-bold">W-7</p>
+              <a href="#" onClick={setBoardPage} className="text-2xl font-bold">W-7</a>
             </div>
           </div>
           <div className="flex w-1/2 background background--skew background--blue">
@@ -40,7 +45,7 @@ const Matches = () => {
             </div>
             <div className="pl-3 py-3 flex-grow">
               <p className="font-12">Current leader</p>
-              <p className="text-2xl font-bold">W-8</p>
+              <a href="#" onClick={setBoardPage} className="text-2xl font-bold">W-8</a>
             </div>
           </div>
         </div>

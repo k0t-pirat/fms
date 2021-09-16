@@ -60,7 +60,12 @@ const leaders = [
   },
 ]
 
-const Board = () => {
+const Board = ({setCurrentPage}) => {
+
+  const setMatchesPage = (evt) => {
+    evt.preventDefault()
+    setCurrentPage('matches')
+  }
   return (
     <main className="px-6">
       <h1 className="font-17 text-center">Leaderboard</h1>
@@ -94,7 +99,7 @@ const Board = () => {
                       <img src={`./img/avatars/avatar-${index}.png`} />
                     </div>
                     <div className="flex flex-col justify-around ml-2">
-                      <p className="font-12">{name}</p>
+                      <a href="#" className="font-12" onClick={setMatchesPage}>{name}</a>
                       <p className="font-11">{nickname}</p>
                     </div>
                   </div>
