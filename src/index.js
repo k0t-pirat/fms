@@ -1,13 +1,16 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
-import SignIn from './components/SignIn'
 import '../css/index.css'
 
-const Index = () => {
-  return <App />
+const container = document.querySelector('#react_root')
+
+const setContainerBackground = (background) => {
+  container.style.background = background
 }
 
-const container = document.querySelector('#react_root')
+const Index = () => {
+  return <App setContainerBackground={setContainerBackground} />
+}
 
 ReactDOM.render(<Index />, container);

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 
 const leaders = [
   {
@@ -60,17 +60,26 @@ const leaders = [
   },
 ]
 
-const Board = ({setCurrentPage}) => {
+const Leaderboard = () => {
+  const [activeButton, setActiveButton] = useState('current')
 
-  const setMatchesPage = (evt) => {
-    evt.preventDefault()
-    setCurrentPage('matches')
-  }
   return (
     <main className="px-6">
-      <h1 className="font-17 text-center">Leaderboard</h1>
-      {/* <input type="radio" name="lists" value="current" />
-      <input type="radio" name="lists" value="alltime" /> */}
+      <h1 className="mb-5 font-17 text-center">Leaderboard</h1>
+      <div className="mx-auto border border-white border-opacity-60 rounded-3xl toggle">
+        <button
+          className={"w-1/2 rounded-3xl capitalize font-3xl" + " " + (activeButton === 'current' ? "active" : "")}
+          onClick={() => {setActiveButton('current')}}
+        >
+          Current
+        </button>
+        <button
+          className={"w-1/2 rounded-3xl capitalize font-3xl" + " " + (activeButton === 'all-time' ? "active" : "")}
+          onClick={() => {setActiveButton('all-time')}}
+        >
+          All-time
+        </button>
+      </div>
       <section>
         <div className="flex justify-between font-9 mb-5 mt-5 px-3" style={{color: 'rgba(255,255,255,0.7)'}}>
           <div className="flex flex-start">
@@ -99,7 +108,7 @@ const Board = ({setCurrentPage}) => {
                       <img src={`./img/avatars/avatar-${index}.png`} />
                     </div>
                     <div className="flex flex-col justify-around ml-2">
-                      <a href="#" className="font-12" onClick={setMatchesPage}>{name}</a>
+                      <p>{name}</p>
                       <p className="font-11">{nickname}</p>
                     </div>
                   </div>
@@ -117,4 +126,4 @@ const Board = ({setCurrentPage}) => {
   )
 }
 
-export default Board
+export default Leaderboard

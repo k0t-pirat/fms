@@ -1,4 +1,14 @@
 const path = require('path')
+const WebpackShellPlugin = require('webpack-shell-plugin-next')
+
+const shellPlugin = new WebpackShellPlugin({
+  onBuildEnd: {
+    scripts: [
+      'cp -r img/ www/',
+      'cp index.html www/'
+    ]
+  }
+})
 
 module.exports = {
   output: {
@@ -23,6 +33,7 @@ module.exports = {
   },
   resolve: {
     extensions: ['.js', '.jsx']
-  }
+  },
+  plugins: [shellPlugin],
 }
 

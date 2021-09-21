@@ -1,19 +1,23 @@
-import React, {useState} from 'react'
-import { icons } from './icons'
+import React, {useState, useEffect} from 'react'
 import Header from './Header'
 import Footer from './Footer'
-import Matches from './Matches'
-import Board from './Board'
+import Games from './Games'
+import Leaderboard from './Leaderboard'
+import SignIn from './SignIn'
 
-const App = () => {
-  const [currentPage, setCurrentPage] = useState('matches')
+const App = ({setContainerBackground}) => {
+  const [currentPage, setCurrentPage] = useState('leaderboard')
+
+  useEffect(() => {
+    setContainerBackground(currentPage === 'signin' ? 'linear-gradient(to bottom, #F2C34E, #ED944F)' : '#141415')
+  }, [currentPage])
 
   return (
     <>
-      {/* <Header /> */}
-      {currentPage === 'matches' ? <Matches setCurrentPage={setCurrentPage} /> : null}
-      {currentPage === 'board' ? <Board setCurrentPage={setCurrentPage} /> : null}
-      <Footer />
+      {currentPage === 'signin' ? <SignIn setCurrentPage={setCurrentPage} /> : null}
+      {currentPage === 'games' ? <Games /> : null}
+      {currentPage === 'leaderboard' ? <Leaderboard /> : null}
+      {currentPage !== 'signin' ? <Footer setCurrentPage={setCurrentPage} /> : null}
     </>
   )
 }
