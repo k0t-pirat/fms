@@ -62,7 +62,6 @@ const leaders = [
 
 const Leaderboard = () => {
   const [activeButton, setActiveButton] = useState('current')
-
   return (
     <main className="px-6">
       <h1 className="mb-5 font-17 text-center">Leaderboard</h1>
@@ -109,7 +108,6 @@ const Leaderboard = () => {
                     </div>
                     <div className="flex flex-col justify-around ml-2">
                       <p>{name}</p>
-                      <p className="font-11">{nickname}</p>
                     </div>
                   </div>
                 </div>
