@@ -6,7 +6,7 @@ import Leaderboard from './Leaderboard'
 import SignIn from './SignIn'
 
 const App = ({setContainerBackground}) => {
-  const [currentPage, setCurrentPage] = useState('leaderboard')
+  const [currentPage, setCurrentPage] = useState('signin')
 
   useEffect(() => {
     setContainerBackground(currentPage === 'signin' ? 'linear-gradient(to bottom, #F2C34E, #ED944F)' : '#141415')
