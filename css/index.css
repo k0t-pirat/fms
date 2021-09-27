@@ -201,6 +201,38 @@ body {
   background-image: url('../img/rhyno-2.png');
 }
 
+.popup-login {
+  margin: auto;
+  width: 550px;
+  height: 510px;
+  z-index: 1;
+  background: linear-gradient(180deg, #FFFEFC 0%, #EEE8EE 49.48%, #DBDBDC 100%);
+}
+.popup-header {
+  position: relative;
+  background: linear-gradient(to bottom, #F2C34E, #ED944F);
+}
+.popup-header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: url('../img/rhyno-3.png');
+  background-repeat: no-repeat;
+  background-position: right;
+}
+.popup-header img {
+  width: 265px;
+  height: 140px;
+}
+
+.login-slogan {
+  /* font-size: 24px; */
+  color: #202430;
+}
+
 .signin {
   height: 100vh;
   background-image: url('../img/rhyno.png');
@@ -214,4 +246,28 @@ body {
 }
 .toggle .active {
   background: linear-gradient(to bottom, #F2C34E, #ED944F);
+}
+
+.link-active {
+  color: #7926E7;
+}
+
+.pick-button {
+  background-color: #7926E7;
+}
+.pick-button[disabled] {
+  background-color: #4F4F4F;
+  cursor: default;
+}
+
+@media (min-width: 768px) {
+  .comments {
+    background-color: #202430;
+  }
+  .leaderboard-white {
+    background-color: #ffffff20;
+  }
+  .leaderboard-violet {
+    background-color: #7926E720;
+  }
 }

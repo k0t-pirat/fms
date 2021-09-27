@@ -7,6 +7,7 @@ const container = document.querySelector('#react_root')
 
 const setContainerBackground = (background) => {
   container.style.background = background
+  document.body.style.background = background
 }
 
 const Index = () => {
