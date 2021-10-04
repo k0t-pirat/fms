@@ -47,7 +47,7 @@ const Games = () => {
   
   return (
     <>
-      <main className="px-6 md:px-0 flex flex-col md:flex-row md:gap-x-5">
+      <main className="pb-5 px-6 md:px-0 flex flex-col md:flex-row md:gap-x-5">
         <div className="md:flex-grow md:pr-60 md:pl-20">
           {!isDesktop ? (
             <section className="mb-6">
@@ -151,12 +151,13 @@ const Games = () => {
           </section>
           <div className="gradient-border mt-6"></div>
           <div className="mb-6">
-            <img className="w-full" src="./img/video.png" />
+            <div className="video-wrapper">
+              <iframe src="https://www.youtube.com/embed/N0QblwXyXvo" frameBorder="0" />
+            </div>
             <div className="flex flex-row justify-between">
               <p className="flex items-center">{icons.eye}<span className="ml-2" style={{color: 'EBEBF5', opacity: '0.6'}}>8563</span></p>
               <p className="flex items-center"><span className="mr-2" style={{color: 'EBEBF5', opacity: '0.6'}}>342</span>{icons.bubble}</p>
             </div>
-            {/* <video /> */}
           </div>
         </div>
         <section className="md:w-1/3 md:p-10 comments">
