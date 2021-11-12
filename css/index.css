@@ -31,6 +31,10 @@ body {
   color: #ffffff;
 }
 
+a, input, button {
+  outline: none;
+}
+
 #react_root {
   min-height: 100vh;
   display: flex;

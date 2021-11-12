@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Header = ({setCurrentPage, currentPage, isAuth, setAuth, setLoginPopupShown}) => {
+const Header = ({setCurrentPage, currentPage, isAuth, setAuth, setLoginPopupShown, setGame, getGameData}) => {
   const setGamesPage = (evt) => {
     evt.preventDefault()
     setCurrentPage('games')
@@ -16,9 +16,29 @@ const Header = ({setCurrentPage, currentPage, isAuth, setAuth, setLoginPopupShow
     evt.preventDefault()
     setCurrentPage('login')
   }
-  const logout = (evt) => {
+  const logout = (getGameData, evt) => {
     evt.preventDefault()
-    setAuth(false)
+    // setAuth(false)
+    localStorage.removeItem('access')
+    getGameData()
+
+    // fetch('http://165.22.179.8/events/', {
+    //       method: 'GET',
+    //       headers: {
+    //         'Content-Type': 'application/json',
+    //         // 'Authorization': 'Bearer ' + '',
+    //       },
+    //   })
+    //   .then(
+    //     response => response.json()
+    //   )
+    //   .then(data => {
+    //       console.log('games data', data)
+    //       setGame(data.results[1])
+    //   })
+    //   .catch(err => {
+    //     console.log('err', err)
+    //   })
   }
   const showLoginPopup = (evt) => {
     evt.preventDefault()
@@ -31,8 +51,8 @@ const Header = ({setCurrentPage, currentPage, isAuth, setAuth, setLoginPopupShow
       <div className="flex">
         <a className={`mr-6 ${currentPage === 'games' ? 'link-active' : ''}`} href="" onClick={setGamesPage}>Matches</a>
         <a className={`mr-6 ${currentPage === 'leaderboard' ? 'link-active' : ''}`} href="" onClick={setLeaderboardPage}>LeaderBoard</a>
-        {isAuth ? 
-          <a className={`mr-6 ${currentPage === 'none' ? 'link-active' : ''}`} href="" onClick={logout}>Sign Out</a> :
+        {localStorage.getItem('access') ? 
+          <a className={`mr-6 ${currentPage === 'none' ? 'link-active' : ''}`} href="" onClick={(evt) => {logout(getGameData, evt)}}>Sign Out</a> :
           <a className={`mr-6 ${currentPage === 'none' ? 'link-active' : ''}`} href="" onClick={showLoginPopup}>Sign In</a>
         }
       </div>

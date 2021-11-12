@@ -1,6 +1,8 @@
-import React, {useState} from "react"
+import React, {useEffect, useState} from "react"
+import Cookies from 'js-cookie'
 import Popup from './Popup'
 import { icons } from './icons'
+import {formatDate} from './util'
 
 const isDesktop = window.screen.width > 768
 
@@ -37,19 +39,49 @@ const teams = [
   },
 ]
 
-const Games = () => {
+const Games = ({doLogin, game}) => {
   const [isPopupActive, setPopupActive] = useState(false)
   const [checkedTeamIndex, setCheckedTeamIndex] = useState(-1)
+  const [activeConditionId, setActiveConditionId] = useState(-1)
 
   const closePopup = () => {
     setPopupActive(false)
+  }
+
+  const pickCondition = (eventId, conditionId) => {
+    // console.log(123)
+    localStorage.getItem('access') ?
+      fetch('http://165.22.179.8/events/' + eventId + '/pick/', {
+            method: 'POST',
+            body: JSON.stringify({condition: conditionId}),
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': 'Bearer ' + localStorage.getItem('access'),
+            },
+        }).then(
+            response => response.json().then(data => {
+              console.log('pick response', data)
+              if (data.detail === 'already picked') {
+                return
+              }
+              setActiveConditionId(conditionId)
+              // {response: response, body: data}
+          }).catch(err => {
+            console.log('eventId err', err)
+          })
+        ) :
+        doLogin()
+  }
+
+  if (!game) {
+    return <p>Загрузка данных...</p>
   }
   
   return (
     <>
       <main className="pb-5 px-6 md:px-0 flex flex-col md:flex-row md:gap-x-5">
         <div className="md:flex-grow md:pr-60 md:pl-20">
-          {!isDesktop ? (
+          {/* {!isDesktop ? (
             <section className="mb-6">
               <h2 className="text-xl text-center mb-9">Matches screen</h2>
               <div className="flex justify-around gap-x-8">
@@ -75,8 +107,8 @@ const Games = () => {
               <div className="gradient-border mt-6"></div>
             </section>) : 
             null
-          }
-          {isDesktop ? (
+          } */}
+          {/* {isDesktop ? (
             <section className="flex py-3 border-b border-gray-600">
               <div className="flex items-center mr-20">
                 <div style={{width: "40px", height: '40px', borderRadius: '50%', backgroundColor: 'white'}}>
@@ -98,54 +130,59 @@ const Games = () => {
               </div>
             </section>) :
             null
-          }
+          } */}
           <section>
-            {!isDesktop ? <h2 className="mb-5 text-center text-5xl font-bold">6/25</h2> : null}
-            {isDesktop ? <h2 className="my-10 text-left text-5xl font-bold">Matches 6/25</h2> : null}
+            {!isDesktop ? <h2 className="mb-5 text-center text-5xl font-bold">{game.name}</h2> : null}
+            {isDesktop ? <h2 className="my-8 text-left text-5xl font-bold">{game.name}</h2> : null}
+            {isDesktop ? <p className="mb-3 text-left">{game.description}</p> : <p className="mb-3 text-center">{game.description}</p>}
             <div className={"flex justify-around" + (isDesktop ? " gap-x-10" : " gap-x-2")}>
-              {teams.map((team, index) => (
-                isDesktop ? 
-                <div key={index} className="flex flex-col w-1/2">
+              {
+                game.conditions.map((condition, index) => (
+                  isDesktop ? 
+                  <div key={index} className="flex flex-col w-1/2">
+                    <div
+                      key={condition.competitor.id}
+                      className={"relative px-2 py-6 flex flex-col justify-around items-center background" + " " + 
+                        (index === 0 ? 'background--darkred' : 'background--darkblue')}
+                      style={{height: '230px'}}
+                    >
+                        <div className="temp" style={{width: '143px', height: '74px'}}>
+                          <img src={condition.competitor.image} />
+                        </div>
+                        <p className="text-center text-2xl font-bold">{condition.competitor.name}</p>
+                        <div className="absolute bottom-0 right-0 mb-3 mr-3">
+                          {condition.satisfied ? icons.check: null}
+                        </div>
+                    </div>
+                    <button
+                      className="mt-10 py-5 rounded pick-button"
+                      onClick={() => {pickCondition(condition.id, condition.competitor.id)}}
+                      disabled={(activeConditionId === condition.id) || (game.picked !== null)}
+                    >
+                      {(activeConditionId === condition.id) || (game.picked === condition.id) ? 'Picked': 'Pick'}
+                    </button>
+                  </div> :
                   <div
-                    key={team.name}
-                    className={"relative px-2 py-6 flex flex-col justify-around items-center background" + " " + team.backgroundClass}
-                    style={{height: '230px'}}
+                    key={condition.competitor.name}
+                    className={"relative px-2 py-6 flex flex-col justify-around items-center cursor-pointer background" + " " + 
+                      (index === 0 ? 'background--darkred' : 'background--darkblue')}
+                    style={{height: '230px', width: '166px'}}
+                    onClick={() => {pickCondition(condition.id, condition.competitor.id)}}
                   >
-                      <div className="temp" style={{width: '143px', height: '74px'}}>
-                        <img src={team.image} />
-                      </div>
-                      <p className="text-center text-2xl font-bold">{team.value}</p>
-                      <div className="absolute bottom-0 right-0 mb-3 mr-3">
-                        {checkedTeamIndex === index ? icons.check: null}
-                      </div>
+                    <div className="temp" style={{width: '143px', height: '74px'}}>
+                      <img src={condition.competitor.image} />
+                    </div>
+                    <p className="text-center text-2xl font-bold">{condition.competitor.name}</p>
+                    <div className="absolute bottom-0 right-0 mb-3 mr-3">
+                      {(activeConditionId === condition.id) || (game.picked === condition.id) ? icons.check : null}
+                    </div>
                   </div>
-                  <button
-                    className="mt-10 py-5 rounded pick-button"
-                    onClick={() => {setCheckedTeamIndex(index)}}
-                    disabled={checkedTeamIndex === index}
-                  >
-                    {checkedTeamIndex === index ? 'Picked': 'Pick'}
-                  </button>
-                </div> :
-                <div
-                  key={team.name}
-                  className={"relative px-2 py-6 flex flex-col justify-around items-center cursor-pointer background" + " " + team.backgroundClass}
-                  style={{height: '230px', width: '166px'}}
-                  onClick={() => {setCheckedTeamIndex(index)}}
-                >
-                  <div className="temp" style={{width: '143px', height: '74px'}}>
-                    <img src={team.image} />
-                  </div>
-                  <p className="text-center text-2xl font-bold">{team.value}</p>
-                  <div className="absolute bottom-0 right-0 mb-3 mr-3">
-                    {checkedTeamIndex === index ? icons.check: null}
-                  </div>
-              </div>
-              ))}
+                ))
+              }
             </div>
             <div className={"my-4 opacity-80" + (isDesktop ? " text-left" : " text-center")}>
               {!isDesktop ? <p className="mb-2">Long press on card to confirm or edit ↑</p> : null}
-              <p>Locks at 4:10</p>
+              <p>Locks at <span className="ml-3">{formatDate(game.end_date)}</span></p>
             </div>
             <div className="gradient-border"></div>
           </section>
