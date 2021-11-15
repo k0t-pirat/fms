@@ -114,7 +114,8 @@ const LoginPopup = ({closePopup, login, getGameData}) => {
           <FacebookLogin
             textButton="Sign up with Facebook"
             // appId= "544840439922230"
-            appId= "1290912134691205"
+            // appId= "1290912134691205"
+            appId="4422565667791850"
             fields="name,email"
             callback={loginByFacebook}
             cssClass="mb-5 mx-auto w-1/2 flex items-center justify-center py-2 bg-blue-500 text-white rounded-lg"
